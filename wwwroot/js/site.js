@@ -1,4 +1,4 @@
-﻿/*Toast Javascript*/
+/*Toast Javascript*/
 $(document).ready(function () {
 
     var message = $('#AlertMessage').text();
@@ -10,15 +10,15 @@ $(document).ready(function () {
 /*Mascara input*/
 $(document).ready(function () {
 
-    $('#Telefone').mask('(00) 00000-0000', { placeholder: "(xx) xxxxx-xxxx" });
+    $('#Phone').mask('(00) 00000-0000', { placeholder: "(xx) xxxxx-xxxx" });
     $('#Cpf').mask('000.000.000-00', { reverse: true, placeholder: "xxx.xxx.xxx-xx" });
     $('#CPF').mask('000.000.000-00', { reverse: true, placeholder: "xxx.xxx.xxx-xx" });
 });
 
 /*JS IMAGEM*/
-function exibirImagem() {
+function displayImage() {
     var oFReader = new FileReader();
-    oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+    oFReader.readAsDataURL(document.getElementById("Image").files[0]);
     oFReader.onload = function (oFREvent) {
         document.getElementById("imgPreview").src = oFREvent.target.result;
     };
@@ -26,19 +26,19 @@ function exibirImagem() {
 
 /*Pagination table*/
 $(document).ready(function () {
-    $('#table-presenca').DataTable();
+    $('#table-attendance').DataTable();
 });
 
 /*AJAX Aula*/
-function aplicaFiltroConsultaAvancadaAula() {
-    var vIdMateria = document.getElementById('materia-dropdown').value;
+function applyClassFilter() {
+    var vIdMateria = document.getElementById('subject-dropdown').value;
     var vDataInicial = document.getElementById('data-inicial').value;
     var vDataFinal = document.getElementById('data-final').value;
     var vSituacao = document.getElementById('situacao-dropdown').value;
 
     $.ajax({
-        url: "/ConsultaAulas/ConsultaAulaAvancada",
-        data: { dataInicial: vDataInicial, dataFinal: vDataFinal, idMateria: vIdMateria, situacao: vSituacao },
+        url: "/ClassQuery/AdvancedClassQuery",
+        data: { startDate: vDataInicial, endDate: vDataFinal, subjectId: vIdMateria, classStatus: vSituacao },
         success: function (dados) {
             if (dados.erro != undefined) {
                 alert(dados.msg);
@@ -51,11 +51,11 @@ function aplicaFiltroConsultaAvancadaAula() {
 }
 
 /*AJAX Listagem*/
-function aplicaFiltroConsultaAvancadaListagem() {
+function applyListingFilter() {
     var vCodigo = document.getElementById('codigo').value;
     var vtipoTabela = document.getElementById('tipoTabela').value;
     $.ajax({
-        url: "/ConsultaListagens/ObtemDadosConsultaAvancada",
+        url: "/ListingQuery/GetAdvancedQueryData",
         data: { codigo: vCodigo, tipoTabela: vtipoTabela },
         success: function (dados) {
             if (dados.erro != undefined) {
@@ -70,12 +70,12 @@ function aplicaFiltroConsultaAvancadaListagem() {
 
 
 /*AJAX Presencas*/
-function aplicaFiltroConsultaAvancadaPresencas() {
-    var vIdAluno = document.getElementById('aluno-dropdown').value;
-    var vIdAula = document.getElementById('aula-dropdown').value;
+function applyAttendanceFilter() {
+    var vIdAluno = document.getElementById('student-dropdown').value;
+    var vIdAula = document.getElementById('class-dropdown').value;
     $.ajax({
-        url: "/ConsultaPresencas/ConsultaPresencaAvancada",
-        data: { idAluno: vIdAluno, idAula: vIdAula },
+        url: "/AttendanceQuery/AdvancedAttendanceQuery",
+        data: { studentId: vIdAluno, classId: vIdAula },
         success: function (dados) {
             if (dados.erro != undefined) {
                 alert(dados.msg);
@@ -95,66 +95,66 @@ $(document).on("click", ".openImageDialog", function () {
 });
 
 /*Deletar Dados*/
-function apagarAluno(id) {
+function deleteStudent(id) {
     Swal.fire({
-        title: 'Confirma a exclusão do registro?',
-        text: "Você não poderá reverter essa ação!",
+        title: 'Confirm record deletion?',
+        text: "You won't be able to revert this action!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#007bff',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            location.href = '/Aluno/Delete?id=' + id;
+            location.href = '/Student/Delete?id=' + id;
         }
     })
 }
 
-function apagarProfessor(id) {
+function deleteTeacher(id) {
     Swal.fire({
-        title: 'Confirma a exclusão do registro?',
-        text: "Você não poderá reverter essa ação!",
+        title: 'Confirm record deletion?',
+        text: "You won't be able to revert this action!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#007bff',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            location.href = '/Professor/Delete?id=' + id;
+            location.href = '/Teacher/Delete?id=' + id;
         }
     })
 }
 
-function apagarMateria(id) {
+function deleteSubject(id) {
     Swal.fire({
-        title: 'Confirma a exclusão do registro?',
-        text: "Você não poderá reverter essa ação!",
+        title: 'Confirm record deletion?',
+        text: "You won't be able to revert this action!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#007bff',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            location.href = '/Materia/Delete?id=' + id;
+            location.href = '/Subject/Delete?id=' + id;
         }
     })
 }
 
-function apagarAula(id) {
+function deleteClass(id) {
     Swal.fire({
-        title: 'Confirma a exclusão do registro?',
-        text: "Você não poderá reverter essa ação!",
+        title: 'Confirm record deletion?',
+        text: "You won't be able to revert this action!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#007bff',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Sim'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            location.href = '/Aula/Delete?id=' + id;
+            location.href = '/Class/Delete?id=' + id;
         }
     })
 }

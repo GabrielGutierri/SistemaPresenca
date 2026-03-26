@@ -1,0 +1,36 @@
+@model List<ClassViewModel>
+<table class="table custom-container shadow overflow-hidden table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Content</th>
+            <th>Information</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    @foreach (var classItem in Model)
+    {
+        <tr>
+            <td><p>@classItem.Content</p></td>
+            <td>
+                <div>
+                    <p class="font-weight-bold mb-1">@classItem.SubjectName</p>
+                    <p class="text-muted mb-0">@classItem.ClassDateTime.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </td>
+            <td>
+                @if ((int)classItem.Status == 1)
+                {
+                    <span class="badge badge-pill badge-success">@classItem.Status</span>
+                }
+                else if ((int)classItem.Status == 2)
+                {
+                    <span class="badge badge-pill badge-secondary">@classItem.Status</span>
+                }
+                else if ((int)classItem.Status == 3)
+                {
+                    <span class="badge badge-pill badge-info">@classItem.Status</span>
+                }
+            </td>
+        </tr>
+    }
+</table>

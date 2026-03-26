@@ -1,0 +1,41 @@
+@model SubjectViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Toast-->
+<span id="AlertMessage" class="d-none">@TempData["AlertMessage"]</span>
+
+<div aria-live="polite" aria-atomic="true" style="position: relative;">
+    <div class="toast custom-container" data-delay="4000">
+        <div class="toast-header text-white">
+            <strong class="mr-auto"> @TempData["AlertMessage"]</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 pt-5">
+    <h2 class="mb-3">Register Subject</h2>
+    <form class="form-group" method="post" action="/Subject/Save">
+        <!--ID generated automatically-->
+        <input type="hidden" name="operation" value="@ViewBag.Operation" />
+        <input type="hidden" name="ID" value="@Model.ID" />
+        <label for="Description" class="mt-1">Description</label>
+        <textarea name="Description" class="form-control custom-field">@Model.Description</textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <br />
+        <label for="CourseLoad" class="mt-1">Course Load</label>
+        <input asp-for="CourseLoad" class="form-control custom-field" />
+        <span asp-validation-for="CourseLoad" class="text-danger"></span>
+        <br />
+        <label for="TeacherCode" class="mt-1">Teacher Code</label>
+        <select asp-for="TeacherCode" asp-items="ViewBag.Teachers" class="form-control custom-field"></select>
+        <span asp-validation-for="TeacherCode" class="text-danger"></span>
+        <br />
+
+        <input type="submit" value="Register" class="btn btn-success custom-button mt-1" />
+    </form>
+</div>

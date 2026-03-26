@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Reflection;
@@ -11,90 +11,90 @@ using BC = BCrypt.Net.BCrypt;
 
 namespace TrabalhoInterdisciplinar.Controllers
 {
-    public class LoginController : PadraoController<LoginViewModel>
+    public class LoginController : BaseController<LoginViewModel>
     {
         public LoginController()
         {
             DAO = new LoginDAO();
-            GeraProximoId = false;
-            ExigeAutenticacao = false;
+            GeneratesNextId = false;
+            RequiresAuth = false;
         }
 
-        public IActionResult FazLogin(LoginViewModel model)
+        public IActionResult Login(LoginViewModel model)
         {
             try
             {
-                if (DAO.Consulta(Convert.ToInt32(model.ID)) == null)
+                if (DAO.Query(Convert.ToInt32(model.ID)) == null)
                 {
-                    TempData["LoginMessage"] = "Usuário ou senha inválidos!";
+                    TempData["LoginMessage"] = "Invalid user or password!";
                     return RedirectToAction("index", "Home");
                 }
 
-                if (model.SenhaHash == "#Sist123" && model.ID == 21)
+                if (model.PasswordHash == "#Sist123" && model.ID == 21)
                 {
-                    HttpContext.Session.SetString("LogadoProfessor", "true");
+                    HttpContext.Session.SetString("TeacherLoggedIn", "true");
                     return RedirectToAction("index", "Home");
                 }
 
-                if (Convert.ToInt32(model.ID) == DAO.Consulta(Convert.ToInt32(model.ID)).ID &&
-                     model.SenhaHash == PasswordHasher.Decrypt(DAO.Consulta(Convert.ToInt32(model.ID)).SenhaHash))
+                if (Convert.ToInt32(model.ID) == DAO.Query(Convert.ToInt32(model.ID)).ID &&
+                     model.PasswordHash == PasswordHasher.Decrypt(DAO.Query(Convert.ToInt32(model.ID)).PasswordHash))
                 {
-                    if (model.SenhaHash == "0001")
+                    if (model.PasswordHash == "0001")
                     {
-                        TempData["PasswordMessage"] = "Crie uma nova senha!";
+                        TempData["PasswordMessage"] = "Please create a new password!";
                         return RedirectToAction("index", "Home");
                     }
 
                     if (model.ID.ToString().Substring(0, 1) == "2")
                     {
-                        HttpContext.Session.SetString("LogadoProfessor", "true");
+                        HttpContext.Session.SetString("TeacherLoggedIn", "true");
                     }
                     else
                     {
-                        HttpContext.Session.SetString("LogadoAluno", "true");
+                        HttpContext.Session.SetString("StudentLoggedIn", "true");
                     }
 
                     return RedirectToAction("index", "Home");
                 }
                 else
                 {
-                    TempData["LoginMessage"] = "Usuário ou senha inválidos!";
+                    TempData["LoginMessage"] = "Invalid user or password!";
                     return RedirectToAction("index", "Home");
                 }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 return View("Error", new ErrorViewModel(err.ToString()));
             }
         }
 
-        public IActionResult CriaNovaSenha(LoginViewModel model, string ConfirmaNovaSenha)
+        public IActionResult CreateNewPassword(LoginViewModel model, string confirmNewPassword)
         {
             try
             {
-                if (DAO.Consulta(Convert.ToInt32(model.ID)) == null)
+                if (DAO.Query(Convert.ToInt32(model.ID)) == null)
                 {
-                    TempData["PasswordMessage"] = "Usuário não existe!";
+                    TempData["PasswordMessage"] = "User does not exist!";
                     return RedirectToAction("index", "Home");
                 }
 
-                //Link regex login -> https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
-                Regex validaSenhaRegex = new Regex("^.*(?=.{8,})(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$");
-                if (model.SenhaHash != null && validaSenhaRegex.IsMatch(model.SenhaHash) && model.SenhaHash == ConfirmaNovaSenha)
+                // Regex reference -> https://pt.stackoverflow.com/questions/373574/regex-para-senha-forte
+                Regex passwordRegex = new Regex("^.*(?=.{8,})(?=.*[@#$%^&+=])(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$");
+                if (model.PasswordHash != null && passwordRegex.IsMatch(model.PasswordHash) && model.PasswordHash == confirmNewPassword)
                 {
-                    string Operacao = "A";
-                    ValidaDados(model, Operacao);
-                    model.SenhaHash = PasswordHasher.Encrypt(model.SenhaHash);
+                    string operation = "A";
+                    ValidateData(model, operation);
+                    model.PasswordHash = PasswordHasher.Encrypt(model.PasswordHash);
                     DAO.Update(model);
                     return RedirectToAction("index", "Home");
                 }
                 else
                 {
-                    TempData["PasswordMessage"] = "Senha inválida!";
+                    TempData["PasswordMessage"] = "Invalid password!";
                     return RedirectToAction("index", "Home");
                 }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 return View("Error", new ErrorViewModel(err.ToString()));
             }
@@ -107,7 +107,7 @@ namespace TrabalhoInterdisciplinar.Controllers
                 HttpContext.Session.Clear();
                 return RedirectToAction("index", "Home");
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 return View("Error", new ErrorViewModel(err.ToString()));
             }

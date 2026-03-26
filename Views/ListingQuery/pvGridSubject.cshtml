@@ -1,0 +1,28 @@
+@model List<SubjectViewModel>
+<table class="table custom-container shadow overflow-hidden table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Information</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @foreach (var subject in Model)
+    {
+        <tr>
+            <td><p class="font-weight-bold">@subject.ID</p></td>
+            <td><p>@subject.Description</p></td>
+            <td>
+                <div>
+                    <p class="font-weight-bold mb-1">@subject.TeacherName</p>
+                    <p class="text-muted mb-0">@subject.CourseLoad</p>
+                </div>
+            </td>
+            <td>
+                <a class="mr-1" href="/Subject/Edit?id=@subject.ID"><i class="bi bi-pencil-fill"></i></a>
+                <a href="javascript:deleteSubject(@subject.ID)"><i class="bi bi-trash-fill"></i></a>
+            </td>
+        </tr>
+    }
+</table>

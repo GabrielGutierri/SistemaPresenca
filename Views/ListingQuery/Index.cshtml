@@ -1,0 +1,111 @@
+@using TrabalhoInterdisciplinar.Enumerators
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Toast-->
+<span id="AlertMessage" class="d-none">@TempData["AlertMessage"]</span>
+
+<div aria-live="polite" aria-atomic="true" style="position: relative;">
+    <div class="toast custom-container bg-danger" data-delay="6000" style="width: 435px; max-width: 450px;">
+        <div class="toast-delete text-white bg-danger ml-1">
+            <strong class="mr-auto">@TempData["AlertMessage"]</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-2">
+            <fieldset id="filterArea" class="form-group custom-fieldset">
+                <legend>Listings</legend>
+                <div class="mt-2">
+                    <label for="code" class="mt-1">Code</label>
+                    <input type="number" id="code" class="form-control custom-field" />
+                </div>
+                <div class="mt-2">
+                    <label for="tableType" class="mt-1">Table</label>
+                    <select id="tableType" class="form-control custom-field" asp-items="Html.GetEnumSelectList<EnumTableType>()"></select>
+                </div>
+                <div class="mt-4 d-flex justify-content-center">
+                    <br />
+                    <input type="button" id="btnFilter" class="btn btn-success custom-button mx-auto" value="Apply"
+                           onclick="applyListingFilter()" />
+                </div>
+            </fieldset>
+        </div>
+        <div id="queryResult" class="table-responsive mt-3 mx-auto col-md-8">
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="loginImage" tabindex="-1" role="dialog" aria-labelledby="loginImageLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img id="myImage" style="width: 100%; object-fit: cover;" class="img-responsive" src="" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 attendance-chart-wrapper">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Amount of Registered Data'],
+            datasets: [{
+                label: 'Student',
+                data: [@ViewBag.StudentCount],
+                borderWidth: 1,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderRadius: 5,
+                borderColor: 'rgba(255, 99, 132, 1)'
+            },
+            {
+                label: 'Teacher',
+                data: [@ViewBag.TeacherCount],
+                borderWidth: 0.5,
+                backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                borderRadius: 5,
+                borderColor: 'rgba(255, 159, 64, 1)'
+            },
+            {
+                label: 'Subject',
+                data: [@ViewBag.SubjectCount],
+                borderWidth: 0.5,
+                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                borderRadius: 5,
+                borderColor: 'rgba(153, 102, 255, 1)'
+            },
+            {
+                label: 'Class',
+                data: [@ViewBag.ClassCount],
+                borderWidth: 0.5,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderRadius: 5,
+                borderColor: 'rgba(54, 162, 235, 1)'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 25,
+                }
+            }
+        }
+    });
+</script>

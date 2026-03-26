@@ -1,0 +1,23 @@
+@model List<AttendanceViewModel>
+
+<div class="table-container">
+    <table class="table custom-container shadow overflow-hidden table-hover" id="table-attendance">
+        <thead class="bg-light">
+            <tr>
+                <th>Student Name</th>
+                <th>Class Content</th>
+                <th>Status</th>
+                <th>Date and Time</th>
+            </tr>
+        </thead>
+        @foreach (var attendance in Model)
+        {
+            <tr>
+                <td><p>@attendance.StudentName</p></td>
+                <td><p>@attendance.ClassDescription</p></td>
+                <td><p>@attendance.AttendanceStatus</p></td>
+                <td><p>@attendance.AttendanceDateTime</p></td>
+            </tr>
+        }
+    </table>
+</div>

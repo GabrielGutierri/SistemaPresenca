@@ -1,0 +1,82 @@
+@using TrabalhoInterdisciplinar.Enumerators
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-2">
+            <fieldset id="filterArea" class="form-group custom-fieldset">
+                <legend>Classes</legend>
+                <div class="mt-2">
+                    <label for="status" class="mt-1">Status</label>
+                    <select Name="status" asp-items="Html.GetEnumSelectList<EnumClassStatus>()" class="form-control custom-field" id="status-dropdown"></select>
+                </div>
+                <div class="mt-2">
+                    <label for="subject" class="mt-1">Subject</label>
+                    <select Name="subject" asp-items="ViewBag.Subjects" class="form-control custom-field" id="subject-dropdown"></select>
+                </div>
+                <div class="mt-2">
+                    <label for="start-date" class="mt-1">Start Date</label>
+                    <input type="date" Name="start-date" class="form-control custom-field" id="start-date" />
+                </div>
+                <div class="mt-2">
+                    <label for="end-date" class="mt-1">End Date</label>
+                    <input type="date" Name="end-date" class="form-control custom-field" id="end-date" />
+                </div>
+                <div class="mt-4 d-flex justify-content-center">
+                    <br />
+                    <input type="button" id="btnFilter" class="btn btn-success custom-button mx-auto" value="Apply"
+                           onclick="applyClassFilter()" />
+                </div>
+            </fieldset>
+        </div>
+
+        <div id="queryResult" class="table-responsive mt-3 mx-auto col-md-8">
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+        <div class="attendance-chart-wrapper">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Future', 'Active', 'Finished'],
+            datasets: [
+                {
+                    label: 'Percentage:',
+                    data: [@ViewBag.Future, @ViewBag.Active, @ViewBag.Finished],
+                    backgroundColor: ['rgba(255, 99, 132, 0.5)',
+                                      'rgba(255, 159, 64, 0.5)',
+                                      'rgba(153, 102, 255, 0.5)'],
+                    borderColor: ['rgba(255, 99, 132, 1)',
+                                  'rgba(255, 159, 64, 1)',
+                                  'rgba(153, 102, 255, 1)']
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Status Pie Chart'
+                }
+            },
+            responsive: true
+        },
+    });
+</script>

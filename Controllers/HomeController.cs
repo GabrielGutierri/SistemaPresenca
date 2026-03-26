@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -24,6 +24,7 @@ namespace TrabalhoInterdisciplinar.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _config;
+
         public HomeController(ILogger<HomeController> logger, IConfiguration config)
         {
             _logger = logger;
@@ -35,26 +36,22 @@ namespace TrabalhoInterdisciplinar.Controllers
         {
             try
             {
-
-                if (HelperControllers.VerificaProfessorLogado(HttpContext.Session))
-                    ViewBag.LogadoProfessor = true;
-                else if (HelperControllers.VerificaAlunoLogado(HttpContext.Session))
-                    ViewBag.LogadoAluno = true;
+                if (ControllerHelper.IsTeacherLoggedIn(HttpContext.Session))
+                    ViewBag.TeacherLoggedIn = true;
+                else if (ControllerHelper.IsStudentLoggedIn(HttpContext.Session))
+                    ViewBag.StudentLoggedIn = true;
                 return View();
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 return View("Error", new ErrorViewModel(err.ToString()));
             }
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        
     }
 }

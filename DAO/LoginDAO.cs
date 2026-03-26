@@ -1,33 +1,33 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using TrabalhoInterdisciplinar.Models;
 
 namespace TrabalhoInterdisciplinar.DAO
 {
-    public class LoginDAO: PadraoDAO<LoginViewModel>
+    public class LoginDAO : BaseDAO<LoginViewModel>
     {
-        protected override SqlParameter[] CriaParametros(LoginViewModel model)
+        protected override SqlParameter[] CreateParameters(LoginViewModel model)
         {
-            SqlParameter[] parametros = new SqlParameter[2];
-            parametros[0] = new SqlParameter("id", model.ID);
-            parametros[1] = new SqlParameter("senha", model.SenhaHash);
-            return parametros;
+            SqlParameter[] parameters = new SqlParameter[2];
+            parameters[0] = new SqlParameter("id", model.ID);
+            parameters[1] = new SqlParameter("senha", model.PasswordHash);
+            return parameters;
         }
 
-        protected override LoginViewModel MontaModel(DataRow registro, bool comJoin = false)
+        protected override LoginViewModel BuildModel(DataRow row, bool withJoin = false)
         {
-            LoginViewModel a = new LoginViewModel()
+            LoginViewModel model = new LoginViewModel()
             {
-                ID = Convert.ToInt32(registro["id"]),
-                SenhaHash = registro["senha"].ToString()
+                ID = Convert.ToInt32(row["id"]),
+                PasswordHash = row["senha"].ToString()
             };
-            return a;
+            return model;
         }
 
-        protected override void SetTabela()
+        protected override void SetTable()
         {
-            Tabela = "Login";
+            Table = "Login";
         }
     }
 }

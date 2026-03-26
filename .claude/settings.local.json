@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv Views/ListingQuery/pvGridAluno.cshtml Views/ListingQuery/pvGridStudent.cshtml)",
+      "Bash(mv Views/ListingQuery/pvGridProfessor.cshtml Views/ListingQuery/pvGridTeacher.cshtml)",
+      "Bash(mv Views/ListingQuery/pvGridMateria.cshtml Views/ListingQuery/pvGridSubject.cshtml)",
+      "Bash(mv Views/ListingQuery/pvGridAula.cshtml Views/ListingQuery/pvGridClass.cshtml)",
+      "Bash(mv Views/ListingQuery/pvGridSemResultado.cshtml Views/ListingQuery/pvGridNoResults.cshtml)",
+      "Bash(cd:*)",
+      "Bash(sed -i 's/ViewBag\\\\.QntdDePresenca/ViewBag.AttendanceData/g' Controllers/AttendanceQueryController.cs Views/AttendanceQuery/Index.cshtml)",
+      "Bash(sed -i 's/ViewBag\\\\.Alunos/ViewBag.Students/g' Controllers/AttendanceQueryController.cs Views/AttendanceQuery/Index.cshtml)",
+      "Bash(sed -i 's/ViewBag\\\\.Aulas/ViewBag.Classes/g' Controllers/AttendanceQueryController.cs Views/AttendanceQuery/Index.cshtml)",
+      "Bash(sed -i 's/ViewBag\\\\.Materias/ViewBag.Subjects/g' Controllers/ClassController.cs Controllers/ClassQueryController.cs Controllers/SubjectController.cs Views/Class/Form.cshtml Views/ClassQuery/Index.cshtml)",
+      "Bash(sed -i 's/ViewBag\\\\.Professores/ViewBag.Teachers/g' Controllers/SubjectController.cs Views/Subject/Form.cshtml)",
+      "Bash(sed -i 's/foreach \\(var aluno in alunos\\)/foreach \\(var student in students\\)/g; s/new SelectListItem\\(aluno\\\\.Name/new SelectListItem\\(student.Name/g; s/aluno\\\\.ID\\\\.ToString/student.ID.ToString/g' Controllers/AttendanceQueryController.cs)",
+      "Bash(__NEW_LINE_d2016c7c88cd4170__ sed:*)",
+      "Bash(grep -v \"//\")",
+      "Bash(sed -i 's/@foreach \\(var presenca in Model\\)/@foreach \\(var attendance in Model\\)/g; s/@presenca\\\\./@attendance./g' Views/AttendanceQuery/pvGridAttendance.cshtml)",
+      "Bash(__NEW_LINE_5e7b90ed4f46d008__ sed:*)"
+    ]
+  }
+}

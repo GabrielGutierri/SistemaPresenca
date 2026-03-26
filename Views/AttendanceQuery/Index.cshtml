@@ -1,0 +1,92 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Data Tables</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</head>
+<div class="container-fluid mt-5 pt-5">
+    <div class="row">
+        <div class="col-md-2">
+            <fieldset id="filterArea" class="form-group custom-fieldset">
+                <legend>Read Attendance</legend>
+                <div class="mb-3 d-flex justify-content-center">
+                    <a class="btn btn-primary custom-button mx-auto" href="/AttendanceQuery/ReadAttendance">Read</a>
+                </div>
+            </fieldset>
+            <fieldset id="filterArea" class="form-group custom-fieldset">
+                <legend>Attendance</legend>
+                <div class="mt-2">
+                    <label for="student" class="mt-1">Student</label>
+                    <select Name="student" asp-items="ViewBag.Students" class="form-control custom-field" id="student-dropdown"></select>
+                </div>
+                <div class="mt-2">
+                    <label for="class" class="mt-1">Class</label>
+                    <select Name="class" asp-items="ViewBag.Classes" class="form-control custom-field" id="class-dropdown"></select>
+                </div>
+                <div class="mt-4 d-flex justify-content-center">
+                    <br />
+                    <input type="button" id="btnFilter" class="btn btn-success custom-button mx-auto" value="Apply"
+                           onclick="applyAttendanceFilter()" />
+                </div>
+            </fieldset>
+        </div>
+
+        <div id="queryResult" class="table-responsive mt-3 mx-auto col-md-8">
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="container">
+        <div class="attendance-chart-wrapper">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('myChart');
+    let dataObjects = [];
+    var array = @Html.Raw(Json.Serialize(@ViewBag.AttendanceData));
+    for (var i = 0; i < array.length; i++) {
+        console.log(array[i]["description"]);
+        console.log(array[i]["percentage"]);
+
+        dataObjects.push({
+            label: array[i]["description"],
+            data: [array[i]["percentage"]],
+            borderWidth: 1,
+            backgroundColor: randomRgba(),
+            borderRadius: 5,
+            borderColor: 'rgba(0, 0, 0, 0.5)'
+        });
+    }
+
+    console.log(dataObjects);
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Attendance Percentage by Subject'],
+            datasets: dataObjects
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                }
+            }
+        }
+    });
+
+    function randomRgba() {
+        var o = Math.round, r = Math.random, s = 255;
+        return 'rgba(' + o(r() * s) + ',' + o(r() * s) + ',' + o(r() * s) + ',' + r().toFixed(1) + ')';
+    }
+</script>

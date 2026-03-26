@@ -2,7 +2,6 @@
     font-family: 'Jost', sans-serif;
 }
 
-
 .field-validation-error {
     font-size: smaller;
 }
@@ -11,11 +10,11 @@
     border: 1px solid #ff0000;
 }
 
-.mesmoTamanho{
+.same-size {
     width: 88px;
 }
 
-.botao-header{
+.header-button {
     border-radius: 30px;
     width: 100%;
 }
@@ -25,35 +24,35 @@
     justify-content: center;
 }
 
-.botao-personalizado-login {
+.login-custom-button {
     width: 200px;
     border-radius: 30px;
 }
 
-.escondeSenha {
+.hide-password {
     margin-left: -35px;
     cursor: pointer;
 }
 
-.cursor-especial{
+.pointer-cursor {
     cursor: pointer;
 }
 
-.alerta-login {
+.login-alert {
     font-size: smaller;
 }
 
-.navbar-personalizada {
+.custom-navbar {
     background-color: rgba(248, 249, 250, 1)
 }
 
-.nav-personalizado {
+.custom-nav {
     line-height: 1;
     margin-top: 0.5rem;
 }
 
-/* -> Cria uma animação nos itens do navbar
-.nav-personalizado::after {
+/* -> Creates an animation on navbar items
+.custom-nav::after {
     display: inline-block;
     content: "";
     height: 2px;
@@ -63,13 +62,13 @@
     transition: ease 400ms;
 }
 
-.nav-personalizado:hover::after {
+.custom-nav:hover::after {
     width: 100%;
 }
 */
 
-.imagemPrincipal {
-    background: no-repeat url(/Imagens/background1.jpg);
+.main-image {
+    background: no-repeat url(/Images/background1.jpg);
     background-position: center;
     height: 25vw;
     background-size: 100%;
@@ -81,12 +80,12 @@
     background: #007bff;
 }
 
-.botao-personalizado{
+.custom-button {
     border-radius: 30px;
     width: 100px;
 }
 
-.botao-personalizado-imagem {
+.custom-image-button {
     border-radius: 30px;
 }
 
@@ -97,31 +96,31 @@ input[type="file"]::file-selector-button {
     color: white;
 }
 
-.campo-personalizado {
+.custom-field {
     border-radius: 30px;
 }
 
-.container-personalizado{
+.custom-container {
     border-radius: 12px;
 }
 
-.fieldset-personalizado {
+.custom-fieldset {
     padding: 10px;
     border: solid 3px rgb(248, 249, 250);
     border-radius: 12px;
 }
 
-.fieldset-personalizado legend {
-    padding: 2px 4px;
-}
+    .custom-fieldset legend {
+        padding: 2px 4px;
+    }
 
-.imagemTamanho {
+.image-size {
     width: 183px;
     margin-right: 20px;
     height: 225px;
 }
 
-.textoTamanho{
+.text-size {
     font-size: 18px;
 }
 
@@ -140,7 +139,7 @@ input[type="file"]::file-selector-button {
     border-bottom: none;
 }
 
-.estilo-footer p {
+.footer-style p {
     margin: 10px 0;
 }
 
@@ -164,22 +163,22 @@ input[type="file"]::file-selector-button {
         color: #555;
     }
 
-
 .container {
-    height:auto;
+    height: auto;
 }
 
 .chart-wrapper {
-    width:500px;
-    height:500px;
+    width: 500px;
+    height: 500px;
     margin: 0 auto;
 }
 
-.chart-wrapper-presenca {
+.attendance-chart-wrapper {
     width: 800px;
     height: 400px;
     margin: 0 auto;
 }
+
 .table-container {
     height: 70vh;
     overflow: auto;

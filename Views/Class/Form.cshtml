@@ -1,0 +1,51 @@
+@model ClassViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--Toast-->
+<span id="AlertMessage" class="d-none">@TempData["AlertMessage"]</span>
+
+<div aria-live="polite" aria-atomic="true" style="position: relative;">
+    <div class="toast custom-container" data-delay="4000">
+        <div class="toast-header text-white">
+            <strong class="mr-auto"> @TempData["AlertMessage"]</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5 pt-5">
+    <h2 class="mb-3">Register Class</h2>
+    <form class="form-group" method="post" action="/Class/Save">
+        <!--ID generated automatically-->
+        <input type="hidden" name="operation" value="@ViewBag.Operation" />
+        <input type="hidden" name="ID" value="@Model.ID" />
+        <label for="Content" class="mt-1">Content</label>
+        <textarea name="Content" value="@Model.Content" class="form-control custom-field">@Model.Content</textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <br />
+        @if (ViewBag.Operation == "I")
+        {
+            <label for="ClassDateTime" class="mt-1">Date and Time</label>
+            <input asp-for="ClassDateTime" class="form-control custom-field" />
+            <span asp-validation-for="ClassDateTime" class="text-danger"></span>
+            <br />
+        }
+        else
+        {
+            <label for="ClassDateTime" class="mt-1">Date and Time</label>
+            <input asp-for="ClassDateTime" class="form-control custom-field" readonly />
+            <span asp-validation-for="ClassDateTime" class="text-danger"></span>
+            <br />
+        }
+        <label for="SubjectCode" class="mt-1">Subject Code</label>
+        <select asp-for="SubjectCode" asp-items="ViewBag.Subjects" class="form-control custom-field"></select>
+        <span asp-validation-for="SubjectCode" class="text-danger"></span>
+        <br />
+
+        <input type="submit" value="Register" class="btn btn-success custom-button mt-1" />
+    </form>
+</div>

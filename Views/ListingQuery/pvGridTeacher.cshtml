@@ -1,0 +1,36 @@
+@model List<TeacherViewModel>
+<table class="table custom-container shadow overflow-hidden table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Code</th>
+            <th>Teacher</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    @foreach (var teacher in Model)
+    {
+        <tr>
+            <td>
+                <p class="font-weight-bold">@teacher.ID</p>
+            </td>
+            <td>
+                <div>
+                    <p class="font-weight-bold mb-1">@teacher.Name</p>
+                    <p class="text-muted mb-0">@teacher.CPF</p>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p class="mb-1">@teacher.Email</p>
+                    <p class="mb-0">@teacher.Phone</p>
+                </div>
+            </td>
+            <td>
+                <a class="mr-1" href="/Teacher/Edit?id=@teacher.ID"><i class="bi bi-pencil-fill"></i></a>
+                <a href="javascript:deleteTeacher(@teacher.ID)"><i class="bi bi-trash-fill"></i></a>
+            </td>
+        </tr>
+    }
+</table>

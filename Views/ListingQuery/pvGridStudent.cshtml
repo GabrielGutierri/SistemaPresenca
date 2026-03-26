@@ -1,0 +1,41 @@
+@model List<StudentViewModel>
+<table class="table custom-container shadow overflow-hidden table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Code</th>
+            <th>Student</th>
+            <th>Contact</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>
+                <p class="font-weight-bold">@student.ID</p>
+            </td>
+            <td>
+                <div class="d-flex align-items-center">
+                    <a href="#loginImage" data-id="data:image/jpeg;base64,@student.ImageBase64" class="openImageDialog" data-toggle="modal">
+                        <img class="img-responsive rounded-circle" src="data:image/jpeg;base64,@student.ImageBase64" alt="#" style="width: 45px; height: 45px; object-fit: cover;">
+                    </a>
+                    <div class="ml-3">
+                        <p class="font-weight-bold mb-1">@student.Name</p>
+                        <p class="text-muted mb-0">@student.Cpf</p>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div>
+                    <p class="mb-1">@student.Email</p>
+                    <p class="mb-0">@student.Phone</p>
+                </div>
+            </td>
+            <td>
+                <a class="mr-1" href="/Student/Edit?id=@student.ID"><i class="bi bi-pencil-fill"></i></a>
+                <a href="javascript:deleteStudent(@student.ID)"><i class="bi bi-trash-fill"></i></a>
+            </td>
+        </tr>
+    }
+</table>

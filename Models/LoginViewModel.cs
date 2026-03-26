@@ -1,7 +1,7 @@
-﻿namespace TrabalhoInterdisciplinar.Models
+namespace TrabalhoInterdisciplinar.Models
 {
-    public class LoginViewModel: PadraoViewModel
+    public class LoginViewModel: BaseViewModel
     {
-        public string SenhaHash { get; set; }
+        public string PasswordHash { get; set; }
     }
 }

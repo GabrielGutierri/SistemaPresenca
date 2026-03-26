@@ -1,0 +1,28 @@
+@model List<ClassViewModel>
+<table class="table custom-container shadow overflow-hidden table-hover">
+    <thead class="bg-light">
+        <tr>
+            <th>Code</th>
+            <th>Content</th>
+            <th>Information</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @foreach (var classItem in Model)
+    {
+        <tr>
+            <td><p class="font-weight-bold">@classItem.ID</p></td>
+            <td><p>@classItem.Content</p></td>
+            <td>
+                <div>
+                    <p class="font-weight-bold mb-1">@classItem.SubjectName</p>
+                    <p class="text-muted mb-0">@classItem.ClassDateTime.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </td>
+            <td>
+                <a class="mr-1" href="/Class/Edit?id=@classItem.ID"><i class="bi bi-pencil-fill"></i></a>
+                <a href="javascript:deleteClass(@classItem.ID)"><i class="bi bi-trash-fill"></i></a>
+            </td>
+        </tr>
+    }
+</table>

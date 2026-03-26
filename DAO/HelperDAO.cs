@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace TrabalhoInterdisciplinar.DAO
@@ -6,58 +6,59 @@ namespace TrabalhoInterdisciplinar.DAO
     public static class HelperDAO
     {
         public static string StringCX;
-        private static SqlConnection GetConexao()
+
+        private static SqlConnection GetConnection()
         {
-            SqlConnection conexao = new SqlConnection(StringCX);
-            conexao.Open();
-            return conexao;
+            SqlConnection connection = new SqlConnection(StringCX);
+            connection.Open();
+            return connection;
         }
 
-        public static DataTable ExecutaProcSelect(string nomeProc, SqlParameter[] parametros)
+        public static DataTable ExecuteProcSelect(string procName, SqlParameter[] parameters)
         {
-
-            using (SqlConnection conexao = GetConexao())
+            using (SqlConnection connection = GetConnection())
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter(nomeProc, conexao))
+                using (SqlDataAdapter adapter = new SqlDataAdapter(procName, connection))
                 {
-                    if (parametros != null)
-                        adapter.SelectCommand.Parameters.AddRange(parametros);
+                    if (parameters != null)
+                        adapter.SelectCommand.Parameters.AddRange(parameters);
                     adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-                    DataTable tabela = new DataTable();
-                    adapter.Fill(tabela);
-                    conexao.Close();
-                    return tabela;
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    connection.Close();
+                    return table;
                 }
-            }
-        }
-        public static void ExecutaProc(string nomeProc, SqlParameter[] parametros)
-        {
-            using (SqlConnection conexao = GetConexao())
-            {
-                using (SqlCommand comando = new SqlCommand(nomeProc, conexao))
-                {
-                    comando.CommandType = CommandType.StoredProcedure;
-                    if (parametros != null)
-                        comando.Parameters.AddRange(parametros);
-                    comando.ExecuteNonQuery();
-                }
-                conexao.Close();
             }
         }
 
-        public static DataTable ExecutaFunctionSelect(string query, SqlParameter[] parametros)
+        public static void ExecuteProc(string procName, SqlParameter[] parameters)
         {
-            using (SqlConnection conexao = GetConexao())
+            using (SqlConnection connection = GetConnection())
             {
-                using (SqlDataAdapter adapter = new SqlDataAdapter(query, conexao))
+                using (SqlCommand command = new SqlCommand(procName, connection))
                 {
-                        if (parametros != null)
-                            adapter.SelectCommand.Parameters.AddRange(parametros);
-                        DataTable tabela = new DataTable();
-                        adapter.Fill(tabela);
-                        conexao.Close();
-                        return tabela;
-                    }
+                    command.CommandType = CommandType.StoredProcedure;
+                    if (parameters != null)
+                        command.Parameters.AddRange(parameters);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            }
+        }
+
+        public static DataTable ExecuteFunctionSelect(string query, SqlParameter[] parameters)
+        {
+            using (SqlConnection connection = GetConnection())
+            {
+                using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                {
+                    if (parameters != null)
+                        adapter.SelectCommand.Parameters.AddRange(parameters);
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    connection.Close();
+                    return table;
+                }
             }
         }
     }
